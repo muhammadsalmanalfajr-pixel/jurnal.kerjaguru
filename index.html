@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2d302b">
+<title>HanDesk — Platform Guru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-art" aria-hidden="true"><div class="cloud cloud-a"></div><div class="cloud cloud-b"></div><div class="mountain"></div><div class="sun"></div></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div id="login-screen" class="login-screen">
+  <div class="login-card panel">
+    <div class="seal">教</div>
+    <div class="eyebrow">TEACHER WORKSPACE · 教师台</div>
+    <h1>HanDesk</h1>
+    <p class="login-sub">Ruang kerja guru untuk laporan, evaluasi, kinerja, dan ide pembelajaran.</p>
+    <div id="existing-users" class="user-list"></div>
+    <div class="divider"><span>atau buat profil guru</span></div>
+    <form id="login-form">
+      <label>Nama guru<input id="login-name" required placeholder="Contoh: Bu Sari"></label>
+      <label>Username<input id="login-user" required placeholder="guru_sari"></label>
+      <button class="btn primary" type="submit">Masuk ke ruang kerja</button>
+    </form>
+    <small>Data tersimpan lokal di browser perangkat ini.</small>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<header class="topbar">
+  <div class="brand"><span class="mini-seal">教</span><div><strong>HanDesk</strong><small>教师工作台</small></div></div>
+  <nav id="nav">
+    <button class="nav-btn active" data-section="dashboard">Ringkasan</button>
+    <button class="nav-btn" data-section="students">Siswa</button>
+    <button class="nav-btn" data-section="evaluation">Evaluasi Nilai</button>
+    <button class="nav-btn" data-section="reports">Laporan</button>
+    <button class="nav-btn" data-section="performance">Kinerja</button>
+    <button class="nav-btn" data-section="ideas">Ide & Struktur</button>
+  </nav>
+  <div class="top-user"><span id="nav-user">Guru</span><button id="logout" class="icon-btn" title="Keluar">↪</button></div>
+</header>
+
+<main class="content">
+<section id="dashboard" class="section active">
+  <div class="hero panel">
+    <div><div class="eyebrow">今日 · TODAY</div><h2>Selamat datang, <span id="dash-name">Guru</span>.</h2><p>Atur pekerjaan mengajar dari satu meja kerja yang tenang dan terstruktur.</p></div>
+    <div class="hero-mark">文<br><small>教</small></div>
+  </div>
+  <div class="stats">
+    <article class="stat panel"><span>Total Siswa</span><strong id="stat-students">0</strong><small>data siswa aktif</small></article>
+    <article class="stat panel"><span>Rata-rata Nilai</span><strong id="stat-average">0</strong><small>dari seluruh evaluasi</small></article>
+    <article class="stat panel"><span>Laporan</span><strong id="stat-reports">0</strong><small>laporan tersimpan</small></article>
+    <article class="stat panel"><span>Ide Aktif</span><strong id="stat-ideas">0</strong><small>ide pembelajaran</small></article>
+  </div>
+  <div class="grid-2">
+    <article class="panel"><div class="panel-title"><h3>Prioritas kerja</h3><span class="stamp">重点</span></div><div id="priority-list" class="list"></div></article>
+    <article class="panel"><div class="panel-title"><h3>Ringkasan kelas</h3><span class="stamp">课堂</span></div><div id="class-summary" class="list"></div></article>
+  </div>
+</section>
+
+<section id="students" class="section">
+  <div class="section-head"><div><div class="eyebrow">学生档案 · STUDENTS</div><h2>Data Siswa</h2><p>Bangun daftar siswa sederhana untuk menjadi dasar evaluasi dan laporan.</p></div></div>
+  <div class="grid-2">
+    <form id="student-form" class="panel form-card">
+      <h3>Tambah siswa</h3>
+      <label>Nama lengkap<input id="student-name" required></label>
+      <label>Kelas<input id="student-class" placeholder="Contoh: VIII A" required></label>
+      <label>Catatan singkat<textarea id="student-note" rows="4" placeholder="Kekuatan, kebutuhan belajar, atau catatan penting."></textarea></label>
+      <button class="btn primary">Simpan siswa</button>
+    </form>
+    <div class="panel"><div class="panel-title"><h3>Daftar siswa</h3><span id="student-count" class="stamp">0</span></div><div id="student-list" class="table-wrap"></div></div>
+  </div>
+</section>
+
+<section id="evaluation" class="section">
+  <div class="section-head"><div><div class="eyebrow">评价 · EVALUATION</div><h2>Evaluasi Nilai</h2><p>Catat nilai, indikator, dan komentar tanpa spreadsheet terpisah.</p></div></div>
+  <div class="grid-2">
+    <form id="eval-form" class="panel form-card">
+      <h3>Input evaluasi</h3>
+      <label>Siswa<select id="eval-student" required></select></label>
+      <label>Mata pelajaran<input id="eval-subject" required placeholder="Contoh: Matematika"></label>
+      <label>Nilai<input id="eval-score" type="number" min="0" max="100" required></label>
+      <label>Indikator<textarea id="eval-comment" rows="4" placeholder="Apa yang sudah dikuasai? Apa yang perlu diperbaiki?"></textarea></label>
+      <button class="btn primary">Simpan evaluasi</button>
+    </form>
+    <div class="panel"><div class="panel-title"><h3>Riwayat evaluasi</h3><span class="stamp">成绩</span></div><div id="eval-list" class="table-wrap"></div></div>
+  </div>
+</section>
+
+<section id="reports" class="section">
+  <div class="section-head"><div><div class="eyebrow">报告 · REPORTS</div><h2>Laporan Guru</h2><p>Susun laporan pembelajaran, perkembangan kelas, dan tindak lanjut.</p></div></div>
+  <div class="grid-2">
+    <form id="report-form" class="panel form-card">
+      <h3>Buat laporan</h3>
+      <label>Judul laporan<input id="report-title" required placeholder="Contoh: Laporan Pembelajaran Minggu 3"></label>
+      <label>Periode<input id="report-period" placeholder="1–7 September 2026"></label>
+      <label>Isi laporan<textarea id="report-body" rows="8" required placeholder="Kegiatan, hasil, kendala, dan tindak lanjut..."></textarea></label>
+      <button class="btn primary">Simpan laporan</button>
+    </form>
+    <div class="panel"><div class="panel-title"><h3>Laporan tersimpan</h3><button id="print-report" class="btn small">Cetak</button></div><div id="report-list" class="report-list"></div></div>
+  </div>
+</section>
+
+<section id="performance" class="section">
+  <div class="section-head"><div><div class="eyebrow">表现 · PERFORMANCE</div><h2>Kinerja Mengajar</h2><p>Catat indikator kerja secara sederhana untuk refleksi pribadi.</p></div></div>
+  <div class="grid-2">
+    <form id="performance-form" class="panel form-card">
+      <h3>Catat kinerja</h3>
+      <label>Indikator<select id="perf-area"><option>Perencanaan pembelajaran</option><option>Pelaksanaan kelas</option><option>Pengelolaan kelas</option><option>Evaluasi & umpan balik</option><option>Administrasi</option></select></label>
+      <label>Skor<input id="perf-score" type="number" min="1" max="5" value="4" required></label>
+      <label>Refleksi<textarea id="perf-note" rows="5" placeholder="Apa yang berjalan baik dan apa yang perlu dibenahi?"></textarea></label>
+      <button class="btn primary">Simpan refleksi</button>
+    </form>
+    <div class="panel"><div class="panel-title"><h3>Rekap kinerja</h3><span class="stamp">自省</span></div><div id="perf-list" class="performance-list"></div></div>
+  </div>
+</section>
+
+<section id="ideas" class="section">
+  <div class="section-head"><div><div class="eyebrow">构思 · IDEATION</div><h2>Ide & Struktur</h2><p>Ubah gagasan mentah menjadi tujuan, langkah, dan hasil yang jelas.</p></div></div>
+  <div class="grid-2">
+    <form id="idea-form" class="panel form-card">
+      <h3>Susun ide</h3>
+      <label>Judul ide<input id="idea-title" required placeholder="Contoh: Proyek sains berbasis kelompok"></label>
+      <label>Tujuan<textarea id="idea-goal" rows="3" placeholder="Apa hasil belajar yang ingin dicapai?"></textarea></label>
+      <label>Langkah utama<textarea id="idea-steps" rows="5" placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea></label>
+      <label>Status<select id="idea-status"><option>Draft</option><option>Siap digunakan</option><option>Selesai</option></select></label>
+      <button class="btn primary">Simpan ide</button>
+    </form>
+    <div class="panel"><div class="panel-title"><h3>Papan ide</h3><span class="stamp">策</span></div><div id="idea-list" class="idea-grid"></div></div>
+  </div>
+</section>
+</main>
+<footer><span>HanDesk · 教师工作台</span><span>Ruang kerja guru lokal</span></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
